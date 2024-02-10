@@ -35,7 +35,7 @@ const PostModel = ({ val, setPostModel }) => {
 
         setLoading(true)
 
-        Api.upload('post/create', formdata)
+        Api.upload('/post/create', formdata)
             .then((res) => {
                 if (res.data.success) {
                     dispatch(addPost({ post: res.data.data }))

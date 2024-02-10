@@ -5,11 +5,13 @@ import { useDispatch } from "react-redux";
 import { loginsuccess } from "../../reducers/authSlice";
 import Api from "../../utills/Api";
 import { setAlert } from "../../reducers/extraSlice";
+import config from '../../utills/config.json'
 
 const Register = () => {
 
     const [fieldsValues, setFieldaVlaues] = useState({})
     const [loading, setLoading] = useState(false)
+    const { errorColor, successColor } = config
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
@@ -24,8 +26,29 @@ const Register = () => {
         setFieldaVlaues(_data)
     }
 
+    const validation = () => {
+
+        let valid = true
+        let emailreg = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+        if (!emailreg.test(fieldsValues.email)) {
+            valid = false
+        }
+
+
+        return valid
+    }
+
     const signup = (e) => {
         e.preventDefault();
+
+        let isValid = validation()
+
+        if (!isValid) {
+            dispatch(setAlert({ data: { message: "Please enter valid details!!", type: errorColor } }))
+            return
+        }
+
         if (fieldsValues?.email && fieldsValues?.password && fieldsValues?.name) {
             let dataa = {
                 "email": fieldsValues.email, "password": fieldsValues.password, "name": fieldsValues.name
@@ -38,15 +61,19 @@ const Register = () => {
                         dispatch(loginsuccess({ data: res.data.data, token: res.data.token }))
                         navigate('/')
                     } else {
-                        dispatch(setAlert({ data: { message: res.data.message, type: "green" } }))
+                        dispatch(setAlert({ data: { message: res.data.message, type: errorColor } }))
                     }
                 })
                 .catch((err) => {
-                    console.log(err)
+                    dispatch(setAlert({ data: { message: "Some error occured! Try Again!!", type: errorColor } }))
+
                 })
                 .finally(() => {
                     setLoading(false)
                 })
+        } else {
+            dispatch(setAlert({ data: { message: "Please enter valid details!!", type: errorColor } }))
+
         }
     }
 

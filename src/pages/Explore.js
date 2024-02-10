@@ -40,11 +40,6 @@ const Explore = () => {
 
         let isValid = validate()
 
-        let headers = {
-            "Authorization": token,
-            "Content-type": "multipart/formdata"
-        }
-
         let formdata = new FormData();
 
         formdata.append("title", fieldsValues?.about || '')
@@ -52,7 +47,7 @@ const Explore = () => {
         formdata.append("post", file)
 
         setLoading(true)
-        Api.upload("post/create", formdata, headers)
+        Api.upload("/post/create", formdata)
             .then((res) => {
                 if (res.data.success) {
                     setFieldaVlaues({ about: "", des: "" })
@@ -65,7 +60,7 @@ const Explore = () => {
                 }
             })
             .catch((err) => {
-                dispatch(setAlert({ data: { message: 'erroe', type: errorColor } }))
+                dispatch(setAlert({ data: { message: 'Some error occured! Try Again!!', type: errorColor } }))
             }).finally(() => {
                 setLoading(false)
             })
@@ -75,7 +70,6 @@ const Explore = () => {
     function PreviewImage() {
         var oFReader = new FileReader();
         oFReader.readAsDataURL(file);
-
         oFReader.onload = function (oFREvent) {
             document.getElementById("uploadPreview").src = oFREvent.target.result;
         };
@@ -87,16 +81,14 @@ const Explore = () => {
         Api.get("/post")
             .then((res) => {
                 if (res.data.success) {
-
                     let reversed = res.data.data.reverse()
                     dispatch(setPosts({ posts: reversed }))
-                    // setPosts(reversed)
                 } else {
-                    dispatch(setAlert({ data: { message: res.data.message, type: "green" } }))
+                    dispatch(setAlert({ data: { message: res.data.message, type: errorColor } }))
                 }
             })
             .catch((err) => {
-                console.log(err)
+                dispatch(setAlert({ data: { message: 'Some error occured! Try Again!!', type: errorColor } }))
             })
             .finally(() => [
                 setLoadingPosts(false)
@@ -141,7 +133,7 @@ const Explore = () => {
                     <div className="absolute cursor-pointer left-0 text-center border p-2 w-[200px] h-8 text-[10px]"  >Upload Image +</div>
                     <input id='post' className="opacity-0 absolute w-[200px]" type="file" name="post" multiple={false} onChange={(e) => setFile(e.target.files[0])} />
                 </div>}
-                <button onClick={handlePost} className="btn btn-primary w-32 rounded-full my-2" >{loading ? "...." : "Post"}</button>
+                <button onClick={handlePost} className="btn btn-primary w-32 rounded-full my-2" >{loading ? <span className="loading loading-dots loading-sm"></span> : "Post"}</button>
             </div>
             {posts.length > 0 ?
                 <div>

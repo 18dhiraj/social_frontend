@@ -28,7 +28,7 @@ const Account = () => {
 
     const deletePost = (id) => {
         setDeleting(id)
-        Api.post('post/delete', { id: id })
+        Api.post('/post/delete', { id: id })
             .then((res) => {
                 if (res.data.success) {
                     let newDatat = posts.filter((e) => e._id !== id)

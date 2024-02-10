@@ -5,6 +5,7 @@ import { loginsuccess } from "../../reducers/authSlice";
 import { useDispatch } from "react-redux";
 import Api from "../../utills/Api";
 import { setAlert } from "../../reducers/extraSlice";
+import config from "../../utills/config.json"
 
 const Login = () => {
 
@@ -12,6 +13,7 @@ const Login = () => {
     const dispatch = useDispatch()
     const [fieldsValues, setFieldaVlaues] = useState({})
     const [loading, setLoading] = useState(false)
+    const {errorColor , successColor} = config;
 
     const onChange = (k, v) => {
         let _data = { ...fieldsValues }
@@ -35,11 +37,11 @@ const Login = () => {
                         let set = localStorage.setItem(process.env.REACT_APP_TOKEN, res.data.token)
                         dispatch(loginsuccess({ data: res.data.data, token: res.data.token }))
                         navigate('/')
-                    } else dispatch(setAlert({ data: { message: res.data.message, type: "green" } }))
+                    } else dispatch(setAlert({ data: { message: res.data.message, type: errorColor } }))
 
                 })
                 .catch((err) => {
-                    dispatch(setAlert({ data: { message: 'login failed', type: "red" } }))
+                    dispatch(setAlert({ data: { message: 'login failed', type: errorColor} }))
                 })
                 .finally(() => {
                     setLoading(false)

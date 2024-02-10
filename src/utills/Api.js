@@ -1,35 +1,39 @@
 import axios from 'axios';
 
-let token = localStorage.getItem(process.env.REACT_APP_TOKEN) || null
 
-let axiosinstance = axios.create({
-    // baseURL: process.env.REACT_APP_BASE_URL,
-    baseURL: process.env.REACT_APP_LIVE_URL,
-    headers: {
+const post = async (url, data) => {
+
+    let token = localStorage.getItem(process.env.REACT_APP_TOKEN) || null
+    let headers = {
         'authorization': token,
     }
-})
 
-const post = async (url, data, headers) => {
     return (
-        await axiosinstance.post(url, data, headers)
+        await axios.post(process.env.REACT_APP_LIVE_URL + url, data, { headers })
     )
 }
 
 const upload = async (url, data) => {
+
+    let token = localStorage.getItem(process.env.REACT_APP_TOKEN) || null
     let headers = {
         'authorization': token,
         "Content-Type": "multipart/form-data"
     }
     return (
-        await axiosinstance.post(url, data, headers)
+        await axios.post(process.env.REACT_APP_LIVE_URL + url, data, { headers })
     )
 
 }
 
 const get = async (url) => {
-    let res = await axiosinstance.get(url)
-    return res
+
+    let token = localStorage.getItem(process.env.REACT_APP_TOKEN) || null
+    let headers = {
+        'authorization': token,
+    }
+
+    return await axios.get(process.env.REACT_APP_LIVE_URL + url, { headers })
 }
 
 
