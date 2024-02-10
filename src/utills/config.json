@@ -1,0 +1,7 @@
+{
+    "primaryColor":"red",
+    "secondaryColor":"gray",
+    "successColor":"#4ed560",
+    "errorColor":"#ff7777",
+    "warningColor":"#f4dd55"
+}
