@@ -9,7 +9,7 @@ const post = async (url, data) => {
     }
 
     return (
-        await axios.post(process.env.REACT_APP_LIVE_URL + url, data, { headers })
+        await axios.post(process.env.REACT_APP_BASE_URL + url, data, { headers })
     )
 }
 
@@ -21,7 +21,7 @@ const upload = async (url, data) => {
         "Content-Type": "multipart/form-data"
     }
     return (
-        await axios.post(process.env.REACT_APP_LIVE_URL + url, data, { headers })
+        await axios.post(process.env.REACT_APP_BASE_URL + url, data, { headers })
     )
 
 }
@@ -33,7 +33,7 @@ const get = async (url) => {
         'authorization': token,
     }
 
-    return await axios.get(process.env.REACT_APP_LIVE_URL + url, { headers })
+    return await axios.get(process.env.REACT_APP_BASE_URL + url, { headers })
 }
 
 

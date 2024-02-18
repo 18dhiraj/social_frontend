@@ -41,7 +41,7 @@ const Login = () => {
 
                 })
                 .catch((err) => {
-                    dispatch(setAlert({ data: { message: 'login failed', type: errorColor} }))
+                    dispatch(setAlert({ data: { message: 'login failed!', type: errorColor} }))
                 })
                 .finally(() => {
                     setLoading(false)
