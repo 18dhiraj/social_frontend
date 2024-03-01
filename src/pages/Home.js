@@ -10,10 +10,13 @@ import Account from "./Account";
 import Explore from "./Explore";
 import PostModel from '../components/PostModel';
 import { setAlert } from '../reducers/extraSlice';
+import config from '../utills/config.json'
+
 
 const Home = () => {
 
-    const user = useSelector(state => state.user.userData)
+    const user = useSelector(state => state.user.userData);
+    const { primaryColor, warningColor, errorColor, successColor } = config;
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -34,12 +37,11 @@ const Home = () => {
                 if (res.data.success) {
                     setPosts(res.data.data)
                 } else {
-                    dispatch(setAlert({ data: { message: res.data.message, type: "green" } }))
-
+                    dispatch(setAlert({ data: { message: res.data.message, type: errorColor } }))
                 }
             })
             .catch((err) => {
-                dispatch(setAlert({ data: { message: 'Error occured!', type: "green" } }))
+                dispatch(setAlert({ data: { message: 'Error occured!', type: errorColor } }))
             })
     }, [])
 

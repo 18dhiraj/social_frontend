@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import InputFields from "./InputFields";
 import axios from "axios";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setAlert } from "../reducers/extraSlice";
 import Api from "../utills/Api";
 import { addPost } from "../reducers/postSlice";
@@ -15,6 +15,7 @@ const PostModel = ({ val, setPostModel }) => {
     const dispatch = useDispatch();
     const [showImage, setShowImage] = useState(false)
     const { errorColor, successColor, warningColor } = config
+    const user = useSelector(state => state.user.userData)
 
     const onChange = (k, v) => {
         let _data = { ...fieldsValues }
@@ -38,7 +39,8 @@ const PostModel = ({ val, setPostModel }) => {
         Api.upload('/post/create', formdata)
             .then((res) => {
                 if (res.data.success) {
-                    dispatch(addPost({ post: res.data.data }))
+                    let _data = { ...res.data.data, userDetails: user }
+                    dispatch(addPost({ post: _data }))
                     dispatch(setAlert({ data: { message: 'Posted Successfully!', type: successColor } }))
                 } else {
                     dispatch(setAlert({ data: { message: res.data.message, type: errorColor } }))

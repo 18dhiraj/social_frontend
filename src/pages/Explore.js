@@ -15,6 +15,7 @@ const Explore = () => {
     const { errorColor, successColor, warningColor } = config
 
     const posts = useSelector(state => state.posts.posts)
+    const user = useSelector(state => state.user.userData)
     const [selectedTab, setSelectedTab] = useState('m')
     const [file, setFile] = useState(null)
     const [fieldsValues, setFieldaVlaues] = useState({})
@@ -53,7 +54,8 @@ const Explore = () => {
                     setFieldaVlaues({ about: "", des: "" })
                     setFile(null)
                     setShowImage(false)
-                    dispatch(addPost({ post: res.data.data }))
+                    let _data = { ...res.data.data, userDetails: user }
+                    dispatch(addPost({ post: _data }))
                     dispatch(setAlert({ data: { message: 'Posted successfully!', type: successColor } }))
                 } else {
                     dispatch(setAlert({ data: { message: res.data.message, type: errorColor } }))
@@ -117,14 +119,16 @@ const Explore = () => {
                         <div onClick={() => setSelectedTab("f")} className={`p-2 text-center  cursor-pointer ${selectedTab == 'f' ? 'border-2 border-indigo-200 bg-[skyblue]' : 'border bg-[white]'} `}>Following</div>
                     </div> */}
             </div>
-            <div className="mt-4 shadow-lg rounded-lg p-4 " >
+            <div className="mt-4 shadow rounded-lg p-4 " >
                 <div className="text-bold text-xl py-4 mb-4 ml-4  " >Hey! what is happening?</div>
                 <InputFields title='About' value={fieldsValues.about} dataKey={'about'} onChange={onChange} />
                 <InputFields title='' value={fieldsValues.des} dataKey={'des'} onChange={onChange} />
                 {showImage &&
                     <div className="relative w-fit" >
-                        <div onClick={removefile} className="cursor-pointer absolute w-5 h-5 right-0 rounded-full bg-[gray] shadow-lg flex justify-center items-center text-[10px]" >
-                            x
+                        <div onClick={removefile} className="cursor-pointer absolute w-5 h-5 right-0 rounded-full bg-[lightgray] shadow-lg flex justify-center items-center text-[10px]" >
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+                            </svg>
                         </div>
                         <img id="uploadPreview" style={{ width: "100px", height: "100px" }} />
                     </div>
