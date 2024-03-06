@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import InputFields from "./InputFields";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { setAlert } from "../reducers/extraSlice";
 import Api from "../utills/Api";
 import { addPost } from "../reducers/postSlice";
-import config from "../utills/config.json"
+import config from "../utills/config.json";
+import TextArea from "./TextArea";
 
 const PostModel = ({ val, setPostModel }) => {
 
@@ -16,6 +17,7 @@ const PostModel = ({ val, setPostModel }) => {
     const [showImage, setShowImage] = useState(false)
     const { errorColor, successColor, warningColor } = config
     const user = useSelector(state => state.user.userData)
+    const inputRef = useRef()
 
     const onChange = (k, v) => {
         let _data = { ...fieldsValues }
@@ -73,6 +75,10 @@ const PostModel = ({ val, setPostModel }) => {
         setShowImage(false)
     }
 
+    const openInput = () => {
+        inputRef.current.click()
+    }
+
     useEffect(() => {
         if (file != null) {
             setShowImage(true)
@@ -99,7 +105,7 @@ const PostModel = ({ val, setPostModel }) => {
                     <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                     <div className="mt-4">
                         <InputFields title='About' value={fieldsValues?.about || ""} dataKey={'about'} onChange={onChange} />
-                        <InputFields title='' value={fieldsValues?.des || ""} dataKey={'des'} onChange={onChange} />
+                        <TextArea title='' value={fieldsValues.des} dataKey={'des'} onChange={onChange} />
                         {showImage &&
                             <div className="relative w-fit" >
                                 <div onClick={removefile} className="cursor-pointer absolute w-5 h-5 right-0 rounded-full bg-[gray] shadow-lg flex justify-center items-center text-[10px]" >
@@ -109,8 +115,8 @@ const PostModel = ({ val, setPostModel }) => {
                             </div>
                         }
                         {file == null ? <div className="relative mb-4 h-8">
-                            <div className="absolute cursor-pointer left-0 text-center border p-2 w-[200px] h-8 text-[10px]"  >Upload Image +</div>
-                            <input id='post' className=" opacity-0 absolute" type="file" name="post" multiple={false} onChange={(e) => setFile(e.target.files[0])} />
+                            <div onClick={openInput} className="absolute cursor-pointer left-0 text-center border p-2 w-[200px] h-8 text-[10px]"  >Upload Image +</div>
+                            <input id='post' ref={inputRef} className="hidden" type="file" name="post" multiple={false} onChange={(e) => setFile(e.target.files[0])} />
                         </div> : <img src={file.uri} />}
                     </div>
                     <button className="btn mt-5 btn-primary w-32 rounded-full" onClick={handlePost}>{loading ? <span className="loading loading-dots loading-sm"></span> : "Post"}</button>
