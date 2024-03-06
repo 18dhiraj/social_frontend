@@ -42,7 +42,13 @@ const Navigation = () => {
     return (
         <>
             <div>
-                {_alert?.show && <div style={{ backgroundColor: _alert.type }} className={`fixed right-10 top-10 w-64  p-4 shadow-lg px-4 rounded flex items-center justify-between z-[100]`}><span className="text-[20px]">{_alert.message}</span> <span className={`w-6 text-center h-6 cursor-pointer shadow-lg hover:bg-[${_alert.type}] rounded-lg`} onClick={() => dispatch(hideAlert())}>x</span> </div>}
+                {_alert?.show && <div style={{ backgroundColor: _alert.type }} className={`fixed right-10 top-10 p-4 shadow-lg px-4 rounded flex items-center justify-between z-[100]`}><span className="text-[20px]">{_alert.message}</span>
+                    <span className={`w-6 text-center h-6 cursor-pointer mx-2 hover:bg-[${_alert.type}] rounded-lg`} onClick={() => dispatch(hideAlert())}>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+                        </svg>
+                    </span>
+                </div>}
 
                 {isLogged ?
                     <Home />

@@ -61,6 +61,9 @@ const Account = () => {
             .catch(() => {
                 dispatch(setAlert({ data: { message: 'failed to delete the post!', type: errorColor } }))
             })
+            .finally(() => {
+                setDeleting(null)
+            })
     }
 
     useEffect(() => {
@@ -104,7 +107,7 @@ const Account = () => {
                                 <img src={require('../assets/user.jpg')} height={"100%"} width={'100%'} />}
                         </div>
                     }
-                    <div style={{ width: '20px', height: '20px', overflow: 'hidden', position: 'absolute', right: 20, bottom: 20, backgroundColor: '#ccc', borderRadius: '50%', zIndex: 10 }} >
+                    <div style={{ width: '20px', height: '20px', overflow: 'hidden', position: 'absolute', right: 25, bottom: 25, backgroundColor: '#ccc', borderRadius: '50%', zIndex: 10 }} >
                         <div style={{ position: 'relative' }}>
                             <input style={{ position: 'relative', zIndex: '100', opacity: 0 }} type="file" onChange={(e) => uploadimage(e.target.files[0])} />
                             <div style={{ position: 'absolute', top: 4, left: 4 }}>

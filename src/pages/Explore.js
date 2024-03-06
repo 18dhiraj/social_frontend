@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import MainContainer from "../components/MainContainer";
 import Api from "../utills/Api";
 import PostComponent from "../components/PostComponent";
@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setAlert } from "../reducers/extraSlice";
 import { addPost, setPosts } from "../reducers/postSlice";
 import config from '../utills/config.json'
+import TextArea from "../components/TextArea";
 
 const Explore = () => {
 
@@ -22,6 +23,8 @@ const Explore = () => {
     const [loading, setLoading] = useState(false)
     const [loadingPosts, setLoadingPosts] = useState(false)
     const [showImage, setShowImage] = useState(false)
+
+    const inputRef = useRef()
     const dispatch = useDispatch()
 
     const onChange = (k, v) => {
@@ -102,6 +105,10 @@ const Explore = () => {
         setShowImage(false)
     }
 
+    const openFilesInput = () => {
+        inputRef.current.click()
+    }
+
     useEffect(() => {
         if (file != null) {
             setShowImage(true)
@@ -120,9 +127,9 @@ const Explore = () => {
                     </div> */}
             </div>
             <div className="mt-4 shadow rounded-lg p-4 " >
-                <div className="text-bold text-xl py-4 mb-4 ml-4  " >Hey! what is happening?</div>
+                <div className="text-bold text-xl py-4 mb-4 ml-4  " >Hey! What is happening?</div>
                 <InputFields title='About' value={fieldsValues.about} dataKey={'about'} onChange={onChange} />
-                <InputFields title='' value={fieldsValues.des} dataKey={'des'} onChange={onChange} />
+                <TextArea title='' value={fieldsValues.des} dataKey={'des'} onChange={onChange} />
                 {showImage &&
                     <div className="relative w-fit" >
                         <div onClick={removefile} className="cursor-pointer absolute w-5 h-5 right-0 rounded-full bg-[lightgray] shadow-lg flex justify-center items-center text-[10px]" >
@@ -133,10 +140,11 @@ const Explore = () => {
                         <img id="uploadPreview" style={{ width: "100px", height: "100px" }} />
                     </div>
                 }
-                {file == null && <div className="relative mb-4 h-8 w-fit">
-                    <div className="absolute cursor-pointer left-0 text-center border p-2 w-[200px] h-8 text-[10px]"  >Upload Image +</div>
-                    <input id='post' className="opacity-0 absolute w-[200px]" type="file" name="post" multiple={false} onChange={(e) => setFile(e.target.files[0])} />
-                </div>}
+                {file == null &&
+                    <div className="relative mb-4 h-8 w-fit">
+                        <div onClick={openFilesInput} className="absolute cursor-pointer left-0 text-center border p-2 w-[200px] h-8 text-[10px]"  >Upload Image +</div>
+                        <input id='post' ref={inputRef} className="hidden" type="file" name="post" multiple={false} onChange={(e) => setFile(e.target.files[0])} />
+                    </div>}
                 <button onClick={handlePost} className="btn btn-primary w-32 rounded-full my-2" >{loading ? <span className="loading loading-dots loading-sm"></span> : "Post"}</button>
             </div>
             {posts.length > 0 ?
