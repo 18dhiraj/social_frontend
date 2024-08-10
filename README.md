@@ -1,3 +1,7 @@
+# SocialApp
+
+This is a social platform which lets you connects to the people around the world users can share about there day and also upload images to the platform, like twitter, This app uses firebase as a data base and node as a backend service. 
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
