@@ -119,7 +119,7 @@ const Explore = () => {
     return (
         // <MainContainer>
         <div>
-            <div className="sticky top-0 pt-5 bg-[white] z-10">
+            <div className="sticky top-0 pt-5 z-10">
                 {/* <div className="p-2 text-center border bg-[skyblue] text-white">Explore</div> */}
                 {/* <div className='  flex grid grid-cols-2'>
                         <div onClick={() => setSelectedTab("m")} className={`p-2 text-center  cursor-pointer ${selectedTab == 'm' ? 'border-2 border-indigo-200 bg-[skyblue]' : 'border bg-[white]'} `}>For you</div>

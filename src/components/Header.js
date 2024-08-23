@@ -17,8 +17,8 @@ const Header = () => {
     }
 
     return (
-        <nav className="py-4  sticky top-0  w-auto bg-[white] z-10">
-            <div className='p-4 text-3xl bg-[white]'>Welcome back {user?.name || "user"}!</div>
+        <nav className="py-4  sticky top-0  w-auto z-10">
+            <div className='p-4 text-3xl'>Welcome back {user?.name || "user"}!</div>
         </nav>
     )
 }
