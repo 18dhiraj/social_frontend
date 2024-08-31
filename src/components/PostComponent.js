@@ -17,7 +17,7 @@ const PostComponent = ({ e, from = 'home', deletePost, deleting = null }) => {
             </div>
             {
                 <div className="flex justify-between">
-                    <div className='font-medium text-lg mt-3' >{e?.title || ''}</div>
+                    <div className='font-medium text-lg mt-3 leading-6' >{e?.title || ''}</div>
                     {from == 'account' && <div className='font-bold  mt-3 cursor-pointer' onClick={() => deletePost(e._id)}  >
                         {/* {JSON.stringify(deleting + " " + e._id)} */}
                         {

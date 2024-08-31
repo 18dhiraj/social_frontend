@@ -143,7 +143,7 @@ const Explore = () => {
                 {file == null &&
                     <div className="relative mb-4 h-8 w-fit">
                         <div onClick={openFilesInput} className="absolute cursor-pointer left-0 text-center border p-2 w-[200px] h-8 text-[10px]"  >Upload Image +</div>
-                        <input id='post' ref={inputRef} className="hidden" type="file" name="post" multiple={false} onChange={(e) => setFile(e.target.files[0])} />
+                        <input id='post' ref={inputRef} className="hidden" type="file" accept="image/*" name="post" multiple={false} onChange={(e) => setFile(e.target.files[0])} />
                     </div>}
                 <button onClick={handlePost} className="btn btn-primary w-32 rounded-full my-2" >{loading ? <span className="loading loading-dots loading-sm"></span> : "Post"}</button>
             </div>
