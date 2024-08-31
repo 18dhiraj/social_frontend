@@ -48,7 +48,7 @@ const Home = () => {
 
     return (
         <MainContainer >
-            <div className='grid grid-cols-4 relative gap-2'>
+            <div className='grid grid-cols-4 relative gap-2 '>
                 <div className='flex flex-col justify-between sticky top-0 py-5 h-screen col-span-1 '>
                     <div className=' '>
                         <div className='font-bold text-2xl mb-3'>Social</div>
@@ -57,7 +57,6 @@ const Home = () => {
                         <button onClick={() => setPostModel(true)} className='btn btn-primary w-11/12 mb-2 rounded-full' >Post</button>
                     </div>
                     <div>
-                        <div className='font-bold text-md m-3 overflow-hidden'>@{user.email}</div>
                         <button onClick={logout} className='btn btn-primary w-11/12 mb-2 rounded-full' >Logout</button>
                     </div>
                 </div>
